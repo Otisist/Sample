@@ -4,6 +4,7 @@ Sample configs v2rayNG, sing-box client side
 
 >[!Caution]
 > For CDN config your domain must registered in cloudflare account and in DNS section , proxy status is on
+
 >[!Note]
 >In these configs, IP or domain or even both are filtered (blocked)
 
@@ -16,6 +17,7 @@ Thanks to @Ptechgithub for [warp script](https://github.com/Ptechgithub/warp) us
 نمونه کانفیگ v2rayNG و sing-box سمت کلاینت (کاربر)
 >[!Caution]
 >برای استفاده از کانفیگ CDN، دامنه شما حتما در اکانت کلودفلر ثبت و گزینه proxy status در قسمت DNS روشن باشد
+
 >[!Note]
 >در این کانفیگ ها، IP یا دامنه یا هردو فیلتر (بلاک) شده اند
 بالاتر از سیاهی رنگی نیست 😆
