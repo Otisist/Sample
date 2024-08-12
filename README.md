@@ -4,7 +4,8 @@ Sample configs v2rayNG, sing-box client side
 
 >[!Caution]
 > For CDN config your domain must registered in cloudflare account and in DNS section , proxy status is on
-
+>[!Note]
+>In these configs, IP or domain or even both are filtered (blocked)
 
 This is the innovative method of otisist 😄. Any copying and abuse will be strictly prosecuted.
 Thanks to @Ptechgithub for [warp script](https://github.com/Ptechgithub/warp) used in the Chain config
@@ -15,8 +16,9 @@ Thanks to @Ptechgithub for [warp script](https://github.com/Ptechgithub/warp) us
 نمونه کانفیگ v2rayNG و sing-box سمت کلاینت (کاربر)
 >[!Caution]
 >برای استفاده از کانفیگ CDN، دامنه شما حتما در اکانت کلودفلر ثبت و گزینه proxy status در قسمت DNS روشن باشد
-
-
+>[!Note]
+>در این کانفیگ ها، IP یا دامنه یا هردو فیلتر (بلاک) شده اند
+بالاتر از سیاهی رنگی نیست 😆
 این روش ابداعی otisist است 😄. هرگونه کپی برداری و سوء استفاده شدیدا پیگرد دارد.
 با تشکر از @Ptechgithub برای [اسکریپت وارپ](https://github.com/Ptechgithub/warp) که به مراتب در کانفیگ Chain مورد استفاده قرار گرفت.
 
