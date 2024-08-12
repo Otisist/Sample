@@ -1,3 +1,5 @@
+[Persian](https://github.com/Otisist/Sample/main/Client/v2rayNG/README(per).md)
+
 > [!WARNING]
 > If Wireguard is still working on your internet, use Chain config otherwise use CDN
 > (Chain config has been tested and works on internet providers: Irancell, Asiatech, Zi-tel and Mobinnet)
