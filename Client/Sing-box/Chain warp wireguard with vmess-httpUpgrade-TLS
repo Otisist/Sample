@@ -91,7 +91,7 @@
       "transport": {
         "type": "httpupgrade",
         "host": "",
-        "path": "/ppp",                   // replace your path
+        "path": "/vmessupgrade",                   // replace your path
         "headers": {}
       },
       "tls": {
