@@ -1,0 +1,183 @@
+{
+  "policy": {
+    "system": {
+      "statsOutboundUplink": true,
+      "statsOutboundDownlink": true
+    }
+  },
+  "dns": {
+    "servers": [
+        "1.1.1.1"        // if your network supported ipv6, you can add [2606:4700:4700::1111] after 1.1.1.1 server
+    ],
+    "tag": "built-in",
+    "queryStrategy": "UseIPv4",  // if your network supported ipv6, you can used UseIP or UseIPv6
+    "disableFallback": true,
+    "disableFallbackIfMatch": true
+  },
+  "inbounds": [
+    {
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "userLevel": 0
+      },
+      "sniffing": {
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "enabled": true
+      },
+      "tag": "socks"
+    },
+    {
+      "port": 10809,
+      "protocol": "http",
+      "settings": {
+        "userLevel": 0
+      },
+      "tag": "http"
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": 10853,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "1.1.1.1",
+        "network": "udp",
+        "port": 53
+      },
+      "tag": "dns-in"
+    }
+  ],
+  "log": {
+    "loglevel": "none",
+    "dnsLog": false
+  },
+  "outbounds": [
+    {
+      "mux": {
+        "concurrency": -1,
+        "enabled": false,
+        "xudpConcurrency": 8,
+        "xudpProxyUDP443": ""
+      },
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xxx.yyy.zzz",     // replace your domain address server
+            "port":  443,                 // replace your port address server 
+            "users": [
+              {
+                "alterId": 0,
+                "encryption": "",
+                "flow": "",
+                "id": "UUID",             // replace your UUID
+                "level": 8,
+                "security": "auto"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "httpupgradeSettings": {
+          "host": "",
+          "path": "/ppppp"               // replace your path config server
+        },
+        "network": "httpupgrade",
+        "security": "tls",
+        "sockopt": {
+          "mark": 255,
+          "tcpcongestion": "bbr",
+          "domainStrategy": "UseIP",
+          "dialerProxy": "wg"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "fingerprint": "chrome",
+          "serverName": "xxx.yyy.zzz",       // replace your sni (domain address) server
+          "show": false
+        }
+      },
+      "tag": "vm"
+    },
+    {
+      "tag": "wg",
+      "protocol": "wireguard",
+      "settings": {
+        "secretKey": "secret key",  
+        "address": [
+          "172.16.0.2/32",
+          "xxxx/128"    // replace your ipv6 wireguard instead of xxxx
+        ],
+        "peers": [
+          {
+            "publicKey": "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=",
+            "allowedIPs": [
+              "0.0.0.0/0",
+              "::/0"
+            ],
+            "endpoint": "ip:port"    // replace your best endpoint for your network IPv4 or [IPv6]
+          }
+        ],
+        "mtu": 1280,
+        "reserved": [
+          aaa,         // replace your reserved id instead of aaa bbb ccc
+          bbb,
+          ccc
+        ],
+        "domainStrategy": "ForceIP",
+        "keepAlive": 30
+      }
+    },
+    {
+      "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "UseIP"
+      },
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      },
+      "tag": "block"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "ip": [
+          "127.0.0.1",
+          "192.168.1.1"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "inboundTag": [
+          "built-in"
+        ],
+        "outboundTag": "wg"
+      },
+      {
+        "inboundTag": [
+          "dns-in"
+        ],
+        "outboundTag": "wg"
+      }
+    ]
+  },
+  "stats": {}
+}
