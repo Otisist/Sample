@@ -7,10 +7,10 @@
   },
   "dns": {
     "servers": [
-        "1.1.1.1"        // if your network supported ipv6, you can add [2606:4700:4700::1111] after 1.1.1.1 server
+        "1.1.1.1"                      // if your network supported ipv6, you can add [2606:4700:4700::1111] after 1.1.1.1 server
     ],
     "tag": "built-in",
-    "queryStrategy": "UseIPv4",  // if your network supported ipv6, you can used UseIP or UseIPv6
+    "queryStrategy": "UseIPv4",        // if your network supported ipv6, you can used UseIP or UseIPv6
     "disableFallback": true,
     "disableFallbackIfMatch": true
   },
@@ -125,12 +125,12 @@
               "0.0.0.0/0",
               "::/0"
             ],
-            "endpoint": "ip:port"    // replace your best endpoint for your network IPv4 or [IPv6]
+            "endpoint": "ip:port"        // replace your best endpoint for your network IPv4 or [IPv6]
           }
         ],
         "mtu": 1280,
         "reserved": [
-          aaa,         // replace your reserved id instead of aaa bbb ccc
+          aaa,                          // replace your reserved id instead of aaa bbb ccc
           bbb,
           ccc
         ],
