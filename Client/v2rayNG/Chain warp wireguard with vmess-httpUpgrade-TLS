@@ -8,8 +8,6 @@
   "dns": {
     "servers": [
         "1.1.1.1"                      // if your network supported ipv6, you can add [2606:4700:4700::1111] after 1.1.1.1 server
-                                       // اگر شبکه (ارائه دهنده اینترنت) از ipv6 پشتیبانی میکند، بعد از 1.1.1.1 میتوانید [2606:4700:4700::1111] را اضافه کنید
-    ],
     "tag": "built-in",
     "queryStrategy": "UseIPv4",        // if your network supported ipv6, you can used UseIP or UseIPv6
     "disableFallback": true,
@@ -70,7 +68,7 @@
         "vnext": [
           {
             "address": "xxx.yyy.zzz",     // replace your domain address server
-            "port":  443,                 // replace your port address server 
+            "port":  443,                 // replace your port address server
             "users": [
               {
                 "alterId": 0,
@@ -87,7 +85,7 @@
       "streamSettings": {
         "httpupgradeSettings": {
           "host": "",
-          "path": "/ppppp"               // replace your path config server
+          "path": "/vmessupgrade"               // replace your path config server side
         },
         "network": "httpupgrade",
         "security": "tls",
