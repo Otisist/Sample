@@ -1,4 +1,4 @@
-[Persian](https://github.com/Otisist/Sample/blob/main/Client/v2rayNG/README(per).md)
+[Persian](https://github.com/Otisist/Sample/blob/main/Client/README(per).md)
 
 > [!WARNING]
 > If Wireguard is still working on your internet, use Chain config otherwise use CDN
