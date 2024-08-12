@@ -98,7 +98,7 @@
       "streamSettings": {
         "httpupgradeSettings": {
           "host": "",
-          "path": "/ppp?ed=3096"          // replace your path instead of ppp
+          "path": "/vmessupgrade?ed=3096"          // replace your path server config instead of vmessupgrade
         },
         "network": "httpupgrade",
         "security": "tls",
