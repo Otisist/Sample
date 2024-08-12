@@ -7,7 +7,7 @@ Sample configs v2rayNG, sing-box client side
 
 
 This is the innovative method of otisist 😄. Any copying and abuse will be strictly prosecuted.
-Thanks to @Ptechgithub for warp script used in the Chain config
+Thanks to @Ptechgithub for [warp script](https://github.com/Ptechgithub/warp) used in the Chain config
 
 
 نمونه کانفیگ هسته xray سمت سرور
@@ -18,4 +18,4 @@ Thanks to @Ptechgithub for warp script used in the Chain config
 
 
 این روش ابداعی otisist است 😄. هرگونه کپی برداری و سوء استفاده شدیدا پیگیرد دارد.
-با تشکر از @Ptechgithub برای اسکریپت وارپ که به مراتب در کانفیگ Chain مورد استفاده قرار گرفت
+با تشکر از @Ptechgithub برای [اسکریپت وارپ](https://github.com/Ptechgithub/warp) که به مراتب در کانفیگ Chain مورد استفاده قرار گرفت
