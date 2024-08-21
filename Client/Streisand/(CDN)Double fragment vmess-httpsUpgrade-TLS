@@ -65,9 +65,6 @@
             "port": 443,                   // replace your port
             "users": [
               {
-                "alterId": 0,
-                "encryption": "",
-                "flow": "",
                 "id": "UUID",              // replace your UUID
                 "level": 8,
                 "security": "auto"
