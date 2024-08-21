@@ -1,0 +1,153 @@
+{
+  "dns": {
+    "queryStrategy": "UseIPv4",        // if your network supported ipv6, you can used UseIP or UseIPv6
+    "disableFallback": true,
+    "disableFallbackIfMatch": true,
+    "servers": [
+        "1.1.1.1"                      // if your network supported ipv6, you can add [2606:4700:4700::1111] after 1.1.1.1 server
+    "tag": "built-in"
+  },
+  "fakedns" : [
+    {
+      "ipPool" : "198.20.0.0\/15",
+      "poolSize" : 512
+    },
+    {
+      "ipPool" : "fc00::\/64",
+      "poolSize" : 512
+    }
+  ],
+  "inbounds" : [
+    {
+      "listen" : "127.0.0.1",
+      "port" : 1080,
+      "protocol" : "socks",
+      "settings" : {
+        "auth" : "noauth",
+        "udp" : true
+      },
+      "sniffing" : {
+        "destOverride" : [
+          "http",
+          "tls",
+          "quic",
+          "fakedns"
+        ],
+        "enabled" : false,
+        "routeOnly" : true
+      },
+      "tag" : "socks"
+    }
+  ],
+  "log": {
+    "loglevel": "none",
+    "dnsLog": false
+  },
+  "outbounds": [
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xxx.yyy.zzz",     // replace your domain address server
+            "port":  443,                 // replace your port address server
+            "users": [
+              {
+                "id": "UUID",             // replace your UUID
+                "level": 8,
+                "security": "auto"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "httpupgradeSettings": {
+          "host": "",
+          "path": "\/vmessupgrade"               // replace your path config server side
+        },
+        "network": "httpupgrade",
+        "security": "tls",
+        "sockopt": {
+          "tcpFastOpen": true,
+          "tcpMptcp": true,
+          "tcpNoDelay": true,
+          "tcpKeepAliveIdle": 100,
+          "tcpcongestion": "bbr",
+          "domainStrategy": "UseIP",
+          "dialerProxy": "wg"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "alpn": [
+            "h2",
+            "http\/1.1"
+          ],
+          "fingerprint": "chrome",
+          "serverName": "xxx.yyy.zzz"       // replace your sni (domain address) server
+        }
+      },
+      "tag": "vm"
+    },
+    {
+      "tag": "wg",
+      "protocol": "wireguard",
+      "settings": {
+        "secretKey": "secret key",  
+        "address": [
+          "172.16.0.2\/32",
+          "xxxx\/128"    // replace your ipv6 wireguard instead of xxxx
+        ],
+        "peers": [
+          {
+            "publicKey": "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=",
+            "allowedIPs": [
+              "0.0.0.0\/0",
+              "::\/0"
+            ],
+            "endpoint": "ip:port"        // replace your best endpoint for your network IPv4 or [IPv6]
+          }
+        ],
+        "mtu": 1280,
+        "reserved": [
+          aaa,                          // replace your reserved id instead of aaa bbb ccc
+          bbb,
+          ccc
+        ],
+        "domainStrategy": "ForceIP"
+      }
+    },
+    {
+      "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "UseIP"
+      },
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {
+      },
+      "tag": "block"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "ip": [
+          "127.0.0.1",
+          "192.168.1.1",
+          "regexp:.*\\.ir$"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "inboundTag": [
+          "built-in"
+        ],
+        "outboundTag": "wg"
+      }
+    ]
+  }
+}
