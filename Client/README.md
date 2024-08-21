@@ -15,4 +15,4 @@ In my experience (Iran), vmess and httpUpgrade work better and have a higher sec
 In CDN configs, in fragment outbounds, we have length parameter, min length 7 characters less than the character length of the domain and max must be 1 character less than the character length of the domain. for example your domain has 44 characters, length: "37-43"
 
 
-You can in min length instead of 7 characters change number to above 7, like 8,9,10 ... characters. But in max length, you must be 1 character less than character length of the domain
+You can in min length instead of 7 characters change number to above 7, like 8,9,10 ... But in max length, you must be 1 character less than character length of the domain
