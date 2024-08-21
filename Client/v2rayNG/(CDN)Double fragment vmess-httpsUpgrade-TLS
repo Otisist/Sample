@@ -185,15 +185,14 @@
         "outboundTag": "direct"
       },
       {
-        "ip": [
-          "1.1.1.1"
+        "inboundTag": [
+          "dns-in"
         ],
-        "outboundTag": "proxy",
-        "port": "53"
+        "outboundTag": "proxy"
       },
      {
         "inboundTag": [
-          "dns-in"
+          "built-in"
         ],
         "outboundTag": "dns-out"
       },
