@@ -1,0 +1,175 @@
+{
+  "dns": {
+    "hosts": {
+      "domain:xxx.yyy.zzz": [      // replace your domain address instead of xxx.yyy.zzz
+        "IP1 CDN cloudflare",
+        "IP2 CDN cloudflare",
+        "IP3 CDN cloudflare",
+         .
+         .
+         .
+        "IPn CDN cloudflare"
+      ]
+    },
+    "servers": [
+      "1.1.1.1"
+    ],
+    "queryStrategy": "UseIPv4",
+    "disableFallback": true,
+    "disableFallbackIfMatch": true,
+    "tag": "built-in"
+  },
+  "fakedns" : [
+    {
+      "ipPool" : "198.20.0.0\/15",
+      "poolSize" : 512
+    },
+    {
+      "ipPool" : "fc00::\/64",
+      "poolSize" : 512
+    }
+  ],
+  "inbounds" : [
+    {
+      "listen" : "127.0.0.1",
+      "port" : 1080,
+      "protocol" : "socks",
+      "settings" : {
+        "auth" : "noauth",
+        "udp" : true
+      },
+      "sniffing" : {
+        "destOverride" : [
+          "http",
+          "tls",
+          "quic",
+          "fakedns"
+        ],
+        "enabled" : false,
+        "routeOnly" : true
+      },
+      "tag" : "socks"
+    }
+  ],
+  "log": {
+    "loglevel": "none",
+    "dnsLog": false
+  },
+  "outbounds": [
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xxx.yyy.zzz",      // replace your domain address instead of xxx.yyy.zzz
+            "port": 443,                   // replace your port
+            "users": [
+              {
+                "alterId": 0,
+                "encryption": "",
+                "flow": "",
+                "id": "UUID",              // replace your UUID
+                "level": 8,
+                "security": "auto"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "httpupgradeSettings": {
+          "host": "",
+          "path": "\/vmessupgrade?ed=3096"          // replace your path server config instead of vmessupgrade
+        },
+        "network": "httpupgrade",
+        "security": "tls",
+        "sockopt": {
+          "tcpFastOpen": true,
+          "tcpMptcp": true,
+          "tcpNoDelay": true,
+          "tcpKeepAliveIdle": 100,
+          "domainStrategy": "UseIPv4",    //if your network supported IPv6, you can use UseIP or UseIPv6
+          "dialerProxy": "frag1"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "alpn": [
+            "h2",
+            "http\/1.1"
+          ],
+          "fingerprint": "chrome",
+          "serverName": "xxx.yyy.zzz"        // replace your sni (domain) address
+        }
+      },
+      "tag": "proxy"
+    },
+    {
+      "tag": "frag1",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "min-max",           // min length must be 7 character less than the character length of the domain and max be 1 character less than the character length of the domain. for example your domain has 44 characters, length: "37-43"
+          "interval": "2-5"              // when min-max smaller number, ping decreased, if not worked for your network, test larger number
+        }
+      },
+      "streamSettings": {
+        "sockopt": {
+          "dialerProxy": "frag2",
+          "tcpNoDelay": true
+        }
+      }
+    },
+    {
+      "tag": "frag2",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "1-3",         // you can use 1-2 ping decreased, or 1-4 or 1-5 but ping increase, I'm using 1-4 or 1-5 when the filtering is the most intense or upload speed too weak
+          "length": "min-max",      // min length must be 7 character less than the character length of the domain and max be 1 character less than the character length of the domain. for example your domain has 44 characters, length: "37-43"
+          "interval": "2-4"         // when min-max smaller number, ping decreased, if not worked for your network, test larger number
+        }
+      }
+    },
+    {
+      "protocol": "dns",
+      "tag": "dns-out"
+    },
+    {
+      "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "UseIPv4"
+      },
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {
+      },
+      "tag": "block"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+     {
+        "ip": [
+          "127.0.0.1",
+          "192.168.1.1",
+          "regexp:.*\\.ir$"
+        ],
+        "outboundTag": "direct"
+      },
+     {
+        "inboundTag": [
+          "built-in"
+        ],
+        "outboundTag": "dns-out"
+      },
+      {
+        "outboundTag": "proxy",
+        "port": "0-65535"
+      }
+    ]
+  }
+}
