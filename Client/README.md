@@ -11,3 +11,6 @@
 >[!NOTE]
 >You can use Vless instead of vmess, use websocket transfer instead of httpUpgrade. but you have to apply these changes on the server as well
 In my experience (Iran), vmess and httpUpgrade work better and have a higher security factor
+
+In CDN configs, in fragment outbounds, we have length parameter, min length must be 7 characters less than the character length of the domain and max be 1 character less than the character length of the domain. for example your domain has 44 characters, length: "37-43"
+You can in min length instead of 7 characters change number to above 7, like 8,9,10 ... characters. But in max length, you must 1 character less than character length of the domain
