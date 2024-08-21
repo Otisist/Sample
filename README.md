@@ -1,3 +1,6 @@
+[Persian](https://github.com/Otisist/Sample/blob/main/README(Per).md)
+
+
 Sample config Xray-core server side
 
 Sample configs v2rayNG, sing-box client side
